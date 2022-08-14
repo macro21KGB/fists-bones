@@ -17,6 +17,18 @@ func getValueForEveryColumn(cells: Array ) -> Array:
 		out[i%3] += cells[i].get_dice_value()
 	return out
 
+func getColumnByIndex(griglia: GridContainer, idx: int):
+	var result : Array = []
+	var allCells = getAllCells(griglia)
+	for i in allCells.size():
+		if i % 3 == idx:
+			result.append_array([allCells[i%3]])
+	
+	return result
+
+
+func addDiceToColumn(value: int, column_idx: int):
+	pass
 
 func getAllCells(grid: GridContainer) -> Array:
 	return griglia.get_children()

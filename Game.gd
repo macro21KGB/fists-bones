@@ -42,8 +42,8 @@ func _input(event):
 			
 	if event.is_action_pressed("select_column"):
 		var children = current_game_grid.getAllCells(current_game_grid.griglia)
-		for cell in children:
-			cell.set_dice_value(20)
+		var res = current_game_grid.getColumnByIndex(current_game_grid.griglia, current_column)
+		
 	print(current_column)
 	
 
