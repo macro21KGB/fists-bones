@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Objects/GameGrid.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/GameGrid/GameGrid.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Game.gd" type="Script" id=2]
+[ext_resource path="res://Objects/DiceThrower/DiceThrower.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
@@ -30,3 +31,5 @@ margin_top = 6.0
 margin_right = 100.0
 margin_bottom = 216.0
 color = Color( 1, 1, 1, 0.145098 )
+
+[node name="DiceThrower" parent="." instance=ExtResource( 3 )]

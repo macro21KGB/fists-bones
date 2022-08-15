@@ -12,14 +12,14 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "Cell",
 "language": "GDScript",
-"path": "res://Objects/Cell.gd"
+"path": "res://Objects/Cell/Cell.gd"
 }, {
 "base": "Control",
 "class": "GameGrid",
 "language": "GDScript",
-"path": "res://Objects/GameGrid.gd"
+"path": "res://Objects/GameGrid/GameGrid.gd"
 }, {
-"base": "Object",
+"base": "Reference",
 "class": "Utils",
 "language": "GDScript",
 "path": "res://Utils.gd"
