@@ -74,6 +74,5 @@ static func sumDictionaryWithDoubles(dict: Dictionary) -> int:
 			out += (key + key) * 2
 		else:
 			out += key
-	
-	print(out)
+			
 	return out

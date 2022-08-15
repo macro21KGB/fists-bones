@@ -10,6 +10,10 @@ onready var total3 = $Total3
 
 onready var totalSum = $TotalSum
 
+# Signals
+signal grid_is_full
+
+
 func updateTotal():
 	var total = getValueForEveryColumn()
 
@@ -17,12 +21,12 @@ func updateTotal():
 	total2.text = str(total[1])
 	total3.text = str(total[2])
 	
-	
 	totalSum.text = str(total[0] + total[1] +total[2])
 
 
-
-
+func resetGrid():
+	for cell in getAllCells(griglia):
+		cell.setDiceValue(0)
 
 func solvePointForColumn(arrayOfCells: Array) -> int:
 	var value_array = Utils.convertCellArrayIntoDiceValueArray(arrayOfCells)
@@ -70,6 +74,11 @@ func addDiceToColumn(value: int, column_idx: int) -> bool:
 		return true
 	return false
 
+func checkIfGridIsFull() -> bool:
+	for cell in getAllCells(griglia):
+		if cell.getDiceValue() == 0:
+			return false
+	return true
 
 func getAllCells(grid: GridContainer) -> Array:
 	return grid.get_children()
@@ -79,3 +88,5 @@ onready var griglia = $GridContainer
 
 func _process(_delta):
 	updateTotal()
+	if checkIfGridIsFull():
+		emit_signal("grid_is_full")

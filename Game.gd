@@ -54,16 +54,14 @@ func _ready():
 	selector.rect_position = setupSelectorPosition(grids[0])
 
 func _input(event):
-	if event.is_action_pressed("ui_down"):
-		current_game_grid = grids[1]
-		selector.rect_position = setupSelectorPosition(current_game_grid)
-	if event.is_action_pressed("ui_up"):
-		current_game_grid = grids[0]
-		selector.rect_position = setupSelectorPosition(current_game_grid)
-	
-	if Input.is_key_pressed(KEY_0):
-		pass
-	
+# DEBUG ONLY
+#	if event.is_action_pressed("ui_down"):
+#		current_game_grid = grids[1]
+#		selector.rect_position = setupSelectorPosition(current_game_grid)
+#	if event.is_action_pressed("ui_up"):
+#		current_game_grid = grids[0]
+#		selector.rect_position = setupSelectorPosition(current_game_grid)
+
 	if event.is_action_pressed("ui_left"):
 		if current_column > 0:
 			selector.rect_position.x -= (CELL_SIZE + MARGIN)
@@ -74,9 +72,23 @@ func _input(event):
 			current_column += 1
 			
 	if event.is_action_pressed("select_column"):
-		
-		if current_game_grid.addDiceToColumn(current_dice_roll, current_column):
-			checkGridsMatch(current_game_grid, selectOtherGameGrid(current_game_grid), current_column)
-			setNewDiceRoll()
-			switchGameGrid()
-			selector.rect_position = setupSelectorPosition(current_game_grid)
+		doTurn()
+
+func doTurn() -> void:
+	if current_game_grid.addDiceToColumn(current_dice_roll, current_column):
+		checkGridsMatch(current_game_grid, selectOtherGameGrid(current_game_grid), current_column)
+		setNewDiceRoll()
+		switchGameGrid()
+		selector.rect_position = setupSelectorPosition(current_game_grid)
+
+
+
+func _on_GameGrid_grid_is_full() -> void:
+	print("FULL")
+	if Utils.sumItemInArray(grids[0].getValueForEveryColumn()) > Utils.sumItemInArray(grids[1].getValueForEveryColumn()):
+		print("GIOCATORE SOPRA VINCE")
+	else:
+		print("GIOCATORE SOTTO VINCE")
+	grids[0].resetGrid()
+	grids[1].resetGrid()
+
