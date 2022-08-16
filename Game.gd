@@ -10,6 +10,8 @@ const CELL_SIZE = 40
 const MARGIN = 40
 const CELL_PADDING_SELECTOR = 25
 
+signal update_score
+
 
 var current_column = 0
 var current_dice_roll 
@@ -82,13 +84,32 @@ func doTurn() -> void:
 		selector.rect_position = setupSelectorPosition(current_game_grid)
 
 
+func resetGame():
+	grids[0].resetGrid()
+	grids[1].resetGrid()
+	$ScoreManager.resetScores()
+	setNewDiceRoll()
 
 func _on_GameGrid_grid_is_full() -> void:
 	print("FULL")
-	if Utils.sumItemInArray(grids[0].getValueForEveryColumn()) > Utils.sumItemInArray(grids[1].getValueForEveryColumn()):
-		print("GIOCATORE SOPRA VINCE")
+	var totalSumOfUpGrid = Utils.sumItemInArray(grids[0].getValueForEveryColumn())
+	var totalSumOfDownGrid = Utils.sumItemInArray(grids[1].getValueForEveryColumn())
+	
+	if totalSumOfUpGrid > totalSumOfDownGrid:
+		print("UP win with" + str(totalSumOfUpGrid))
+		print("DOWN loses with" + str(totalSumOfDownGrid))
+		emit_signal("update_score", "UP")
 	else:
-		print("GIOCATORE SOTTO VINCE")
+		
+		print("DOWN win with" + str(totalSumOfDownGrid))
+		print("UP loses with" + str(totalSumOfUpGrid))
+		emit_signal("update_score", "DOWN")
+		
 	grids[0].resetGrid()
 	grids[1].resetGrid()
 
+
+
+func _on_Button_pressed() -> void:
+	resetGame()
+	$Button.disabled = true

@@ -16,10 +16,10 @@ static func checkForMoreThanOneMatch(arrayOfCells: Array) -> int:
 
 	for i in range(arrayOfCells.size()):
 		var current_cell_i = getDiceValueFromCell(arrayOfCells[i])
-
+		
 		if current_cell_i == 0:
 			continue
-
+			
 		for j in range(arrayOfCells.size()):
 			var current_cell_j = getDiceValueFromCell(arrayOfCells[j]) 
 

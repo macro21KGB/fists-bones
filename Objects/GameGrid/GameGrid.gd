@@ -1,9 +1,6 @@
 extends Control
 class_name GameGrid
 
-
-export (bool) var isActive = false
-
 onready var total1 = $Total1
 onready var total2 = $Total2
 onready var total3 = $Total3
@@ -27,6 +24,7 @@ func updateTotal():
 func resetGrid():
 	for cell in getAllCells(griglia):
 		cell.setDiceValue(0)
+	
 
 func solvePointForColumn(arrayOfCells: Array) -> int:
 	var value_array = Utils.convertCellArrayIntoDiceValueArray(arrayOfCells)
