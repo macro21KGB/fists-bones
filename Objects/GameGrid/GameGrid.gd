@@ -23,14 +23,25 @@ func updateTotal():
 
 func resetGrid():
 	for cell in getAllCells(griglia):
-		cell.setDiceValue(0)
+		cell.reset()
+	
 	
 
 func solvePointForColumn(arrayOfCells: Array) -> int:
 	var value_array = Utils.convertCellArrayIntoDiceValueArray(arrayOfCells)
 	var dict = Utils.countEveryElementInArray(value_array)
-	var sum = Utils.sumDictionaryWithDoubles(dict)
 	
+	var selected_high = -1
+	var keys_dict = dict.keys()
+	for key in keys_dict:
+		if dict[key] >= 2 and key != 0:
+			selected_high = key
+	
+	for i in value_array.size():
+		if value_array[i] == selected_high:
+			arrayOfCells[i].setHighlight(true)
+	
+	var sum = Utils.sumDictionaryWithDoubles(dict)
 	return sum
 
 func getValueForEveryColumn() -> Array:
@@ -38,6 +49,7 @@ func getValueForEveryColumn() -> Array:
 	var col1 =  getColumnByIndex(griglia, 0)
 	var col2 = getColumnByIndex(griglia, 1)
 	var col3 = getColumnByIndex(griglia, 2)
+
 
 	var sum1 = solvePointForColumn(col1)
 	var sum2 = solvePointForColumn(col2)

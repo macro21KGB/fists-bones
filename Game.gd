@@ -19,6 +19,8 @@ var current_dice_roll
 onready var grids = [$GameGrid, $GameGrid2]
 onready var current_game_grid = grids[0]
 onready var dice_thrower_text = $DiceThrower/Dice
+onready var popup_points = $WinAmountDialog 
+
 
 func checkGridsMatch(gridAttacker : GameGrid, gridDefender : GameGrid, column_idx: int):
 	var attacker_column = gridAttacker.getColumnByIndex(gridAttacker.griglia, column_idx)
@@ -96,13 +98,10 @@ func _on_GameGrid_grid_is_full() -> void:
 	var totalSumOfDownGrid = Utils.sumItemInArray(grids[1].getValueForEveryColumn())
 	
 	if totalSumOfUpGrid > totalSumOfDownGrid:
-		print("UP win with" + str(totalSumOfUpGrid))
-		print("DOWN loses with" + str(totalSumOfDownGrid))
+		popup_points.winRed(totalSumOfUpGrid, totalSumOfDownGrid)
 		emit_signal("update_score", "UP")
-	else:
-		
-		print("DOWN win with" + str(totalSumOfDownGrid))
-		print("UP loses with" + str(totalSumOfUpGrid))
+	else:		
+		popup_points.winBlue(totalSumOfUpGrid, totalSumOfDownGrid)
 		emit_signal("update_score", "DOWN")
 		
 	grids[0].resetGrid()
@@ -112,4 +111,5 @@ func _on_GameGrid_grid_is_full() -> void:
 
 func _on_Button_pressed() -> void:
 	resetGame()
+	popup_points.resetMessage()
 	$Button.disabled = true
