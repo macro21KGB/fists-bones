@@ -61,6 +61,20 @@ margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 5 )
 
+[node name="ColorRect" type="ColorRect" parent="ScoreManager"]
+margin_left = 60.0
+margin_top = 117.0
+margin_right = 100.0
+margin_bottom = 157.0
+color = Color( 1, 0, 0, 1 )
+
+[node name="ColorRect2" type="ColorRect" parent="ScoreManager"]
+margin_left = 908.0
+margin_top = 394.0
+margin_right = 948.0
+margin_bottom = 434.0
+color = Color( 0.243137, 0.321569, 0.835294, 1 )
+
 [node name="DowPlayerScore" type="Label" parent="ScoreManager"]
 margin_left = 887.0
 margin_top = 375.0
@@ -72,9 +86,9 @@ align = 1
 valign = 1
 
 [node name="UpPlayerScore" type="Label" parent="ScoreManager"]
-margin_left = 40.0
+margin_left = 39.0
 margin_top = 97.0
-margin_right = 80.0
+margin_right = 79.0
 margin_bottom = 139.0
 rect_scale = Vector2( 2, 2 )
 text = "1"
@@ -90,7 +104,6 @@ shortcut_in_tooltip = false
 text = "Reset"
 
 [node name="WinAmountDialog" parent="." instance=ExtResource( 6 )]
-visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
