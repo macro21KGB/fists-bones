@@ -15,14 +15,10 @@ func resetScores():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	resetScores()
+	GameEvents.emit_signal("restart_game",self, "_on_game_restart")
 
 func add1ToScore(label: Label):
 	label.text = str(int(label.text) + 1)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
 
 
 func _on_Game_update_score(who: String) -> void:

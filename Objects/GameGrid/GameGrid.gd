@@ -11,8 +11,11 @@ onready var totalSum = $TotalSum
 signal grid_is_full
 
 
+func _ready() -> void:
+	GameEvents.connect("next_turn", self, "_on_next_turn")
+
 func updateTotal():
-	var total = getValueForEveryColumn()
+	var total : Array = getValueForEveryColumn()
 
 	total1.text = str(total[0])
 	total2.text = str(total[1])
@@ -20,11 +23,16 @@ func updateTotal():
 	
 	totalSum.text = str(total[0] + total[1] +total[2])
 
+func resetTotal():
+	total1.text = str(0)
+	total2.text = str(0)
+	total3.text = str(0)
+	totalSum.text = str(0)
 
 func resetGrid():
 	for cell in getAllCells(griglia):
 		cell.reset()
-	
+	resetTotal()
 	
 
 func solvePointForColumn(arrayOfCells: Array) -> int:
@@ -54,7 +62,6 @@ func getValueForEveryColumn() -> Array:
 	var sum1 = solvePointForColumn(col1)
 	var sum2 = solvePointForColumn(col2)
 	var sum3 = solvePointForColumn(col3)
-
 
 	return [sum1,sum2,sum3]
 
@@ -96,7 +103,8 @@ func getAllCells(grid: GridContainer) -> Array:
 onready var griglia = $GridContainer
 
 
-func _process(_delta):
-	updateTotal()
-	if checkIfGridIsFull():
-		emit_signal("grid_is_full")
+func _on_next_turn(grid: GameGrid) -> void:
+	if grid == self:
+		updateTotal()
+		if checkIfGridIsFull():
+			emit_signal("grid_is_full")

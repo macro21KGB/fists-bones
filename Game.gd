@@ -12,7 +12,6 @@ const CELL_PADDING_SELECTOR = 25
 
 signal update_score
 
-
 var current_column = 0
 var current_dice_roll 
 
@@ -56,16 +55,10 @@ func setupSelectorPosition(gameGrid):
 func _ready():
 	setNewDiceRoll()
 	selector.rect_position = setupSelectorPosition(grids[0])
+	GameEvents.connect("restart_game", self, "_on_game_restart")
+
 
 func _input(event):
-# DEBUG ONLY
-#	if event.is_action_pressed("ui_down"):
-#		current_game_grid = grids[1]
-#		selector.rect_position = setupSelectorPosition(current_game_grid)
-#	if event.is_action_pressed("ui_up"):
-#		current_game_grid = grids[0]
-#		selector.rect_position = setupSelectorPosition(current_game_grid)
-
 	if event.is_action_pressed("ui_left"):
 		if current_column > 0:
 			selector.rect_position.x -= (CELL_SIZE + MARGIN)
@@ -82,6 +75,10 @@ func doTurn() -> void:
 	if current_game_grid.addDiceToColumn(current_dice_roll, current_column):
 		checkGridsMatch(current_game_grid, selectOtherGameGrid(current_game_grid), current_column)
 		setNewDiceRoll()
+		
+		# go to next turn updatin the total count
+		GameEvents.emit_signal("next_turn", current_game_grid)
+		
 		switchGameGrid()
 		selector.rect_position = setupSelectorPosition(current_game_grid)
 
@@ -89,11 +86,9 @@ func doTurn() -> void:
 func resetGame():
 	grids[0].resetGrid()
 	grids[1].resetGrid()
-	$ScoreManager.resetScores()
 	setNewDiceRoll()
 
 func _on_GameGrid_grid_is_full() -> void:
-	print("FULL")
 	var totalSumOfUpGrid = Utils.sumItemInArray(grids[0].getValueForEveryColumn())
 	var totalSumOfDownGrid = Utils.sumItemInArray(grids[1].getValueForEveryColumn())
 	
@@ -108,8 +103,6 @@ func _on_GameGrid_grid_is_full() -> void:
 	grids[1].resetGrid()
 
 
-
-func _on_Button_pressed() -> void:
+func _on_game_restart():
 	resetGame()
-	popup_points.resetMessage()
-	$Button.disabled = true
+
